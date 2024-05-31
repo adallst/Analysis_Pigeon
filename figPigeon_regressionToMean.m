@@ -1,16 +1,17 @@
-function figPigeon_regressionToMean(dataTable, num)
+function figPigeon_regressionToMean(dataTable, block_names_publish, num)
 % function figPigeon_regressionToMean(dataTable, num)
 %
 % Figure: regression to mean
 %
 arguments
-    dataTable    
+    dataTable   
+    block_names_publish
     num = 2
 end
 
 %% Set up figure
 wid     = 17.6; % total width
-cols    = {3};
+cols    = {3,3};
 hts     = 3.5;
 [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 0.5, [], 'Pigeons', true);
 set(axs,'Units','normalized');
@@ -20,12 +21,14 @@ subjects = nonanunique(dataTable.subjectIndex);
 numSubjects = length(subjects);
 blocks = nonanunique(dataTable.blockIndex);
 numBlocks = length(blocks);
-rData = nan(numSubjects,3,numBlocks); % 2: regression slope, intercept, p-value
+rData = nan(numSubjects,3,numBlocks,2); % per sub per iter: regression slope, intercept, p-value
+rmhead = [0 20]; %removing the first so many trials comparison to all trials
 
 % For shuffle text
 numShuffles = 1000;
 shuffleData = nan(numShuffles,2);
 
+for ct =1:length(rmhead)
 % Loop through each subject
 Lg = dataTable.trialNumber > 20 & dataTable.RT>=0;
 for bb = 1:numBlocks
@@ -41,7 +44,7 @@ for bb = 1:numBlocks
         numTrials = length(bounds);
         X = cat(2, ones(numTrials,1), bounds);
         Y = diff(bounds);
-        rData(ss,1:2,bb) = X(1:end-1,:)\Y;
+        rData(ss,1:2,bb,ct) = X(1:end-1,:)\Y;
        
         % Do the shuffles
         for ff = 1:numShuffles
@@ -50,7 +53,7 @@ for bb = 1:numBlocks
             shuffleData(ff,:) = X(1:end-1,:)\Y;
         end
 
-        rData(ss,3,bb) = sum(shuffleData(:,2)<rData(ss,2,bb))./numShuffles;
+        rData(ss,3,bb,ct) = sum(shuffleData(:,2)<rData(ss,2,bb,ct))./numShuffles;
     end
 end
 
@@ -60,14 +63,31 @@ wht = 0.99.*ones(1,3);
 for bb = 1:numBlocks
 
     % zbound median, IQR
-    axes(axs(bb)); cla reset; hold on;
-    plot(rData(:,1,bb), rData(:,2,bb), 'ko', 'MarkerFaceColor', wht);
-    Lsig = rData(:,3,bb)<0.005 | rData(:,3,bb)>0.995;
-    plot(rData(Lsig,1,bb), rData(Lsig,2,bb), 'ko', 'MarkerFaceColor', 'k');
+%     axes(axs(bb)); cla reset; hold on;
+%     plot(rData(:,1,bb), rData(:,2,bb), 'ko', 'MarkerFaceColor', wht);
+%     Lsig = rData(:,3,bb)<0.005 | rData(:,3,bb)>0.995;
+%     plot(rData(Lsig,1,bb), rData(Lsig,2,bb), 'ko', 'MarkerFaceColor', 'k');
+%     plot([0 0.75], [-1 -1], 'k:');
+%     axis([0 0.75 -2 1])
+%     if bb == 1
+%         xlabel('Bound')
+%         ylabel('Delta bound')
+%     end
+    
+     axes(axs(bb+numBlocks.*(ct-1))); cla reset; hold on;
+    plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor', wht);
+    Lsig = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
+    plot(rData(Lsig,1,bb,ct), rData(Lsig,2,bb,ct), 'ko', 'MarkerFaceColor', 'k');
     plot([0 0.75], [-1 -1], 'k:');
     axis([0 0.75 -2 1])
     if bb == 1
-        xlabel('Bound')
-        ylabel('Delta bound')
+        xlabel('Intercept')
+        ylabel('Slope')
     end
+    if ct == 1
+        title(block_names_publish(bb))
+    end
+end
+end
+
 end

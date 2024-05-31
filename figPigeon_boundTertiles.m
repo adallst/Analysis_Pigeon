@@ -1,10 +1,11 @@
-function figPigeon_boundTertiles(dataTable, num)
+function figPigeon_boundTertiles(dataTable, block_names_publish, num)
 % function figPigeon_boundTertiles(dataTable, num)
 %
 % Figure: 
 
 arguments
     dataTable
+    block_names_publish
     num = 5
 end
 
@@ -67,5 +68,6 @@ for bb = 1:numBlocks
             xlabel('Mean bound mid')
             ylabel('Mean bound late')
         end
+        title(block_names_publish(bb))
     end
 end

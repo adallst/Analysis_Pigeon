@@ -1,11 +1,12 @@
-function figPigeon_accuracyVsRT(dataTable, num, generativeMean, generativeSTD)
+function figPigeon_accuracyVsRT(dataTable, block_names_publish, num, generativeMean, generativeSTD)
 % function figPigeon_accuracyVsRT(dataTable, num, generativeMean, generativeSTD)
 %
 % Figure: accuracy vs RT. duh.
 %
 
 arguments
-    dataTable    
+    dataTable  
+    block_names_publish
     num = 4
     generativeMean = 0.05
     generativeSTD = 0.15
@@ -65,8 +66,9 @@ for bb = 1:numBlocks
     % boxplot of RT vs pct correct
     boxplot(rtData(:,:,bb,1), 'labels', RTBins);
 %     axis([40 100 0 18])
-%     if bb == 1
-%         xlabel('Pct correct')
-%         ylabel('RT (steps)')
-%     end
+    if bb == 1
+        ylabel('Pct correct')
+        xlabel('RT (steps)')
+    end
+    title(block_names_publish(bb))
 end

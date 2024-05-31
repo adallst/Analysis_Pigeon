@@ -1,4 +1,4 @@
-function figPigeon_choiceCongruence(dataTable, num)
+function figPigeon_choiceCongruence(dataTable, block_names_publish, num)
 % function figPigeon_choiceCongruence(dataTable, num)
 %
 % Figure:
@@ -6,6 +6,7 @@ function figPigeon_choiceCongruence(dataTable, num)
 
 arguments
     dataTable
+    block_names_publish
     num = 4
 end
 
@@ -66,6 +67,9 @@ for dd = 1:numDelays
         elseif bb>1
             ylabel('congruence')
             xlabel('RT (steps)')
+        end
+        if dd == 1
+            title(block_names_publish(bb))
         end
     end
 end

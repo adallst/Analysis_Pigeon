@@ -1,4 +1,4 @@
-function figPigeon_performanceSummary(dataTable, num, numSimSubjects)
+function figPigeon_performanceSummary(dataTable, block_names_publish, num, numSimSubjects)
 % function figPigeon_performanceSummary(dataTable, num)
 %
 % Figure: basic performance
@@ -7,9 +7,11 @@ function figPigeon_performanceSummary(dataTable, num, numSimSubjects)
 % bottom row: coins/step vs median bound, per subject
 
 arguments
-    dataTable    
+    dataTable 
+    block_names_publish
     num = 2
     numSimSubjects = 1000
+    
 end
 
 %% Set up figure
@@ -102,6 +104,7 @@ for bb = 1:numBlocks
         xlabel('Pct correct')
         ylabel('RT (steps)')
     end
+    title(block_names_publish(bb)) 
 
     % coins/step
     axes(axs(numBlocks+bb)); cla reset; hold on;

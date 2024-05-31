@@ -9,6 +9,7 @@ arguments
     options.numSteps        double = 10   % Number steps to show
     options.axs             double = gca
     options.generativeMean  double = 0.05
+    options.titletext           string = "Simulation"
 end
 
 % Make steps matrix
@@ -56,3 +57,4 @@ end
 axis([-options.numSteps -1 -0.05 0.16])
 xlabel('Past steps re: choice')
 ylabel('Step size')
+title(options.titletext)

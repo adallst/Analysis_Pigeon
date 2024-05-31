@@ -1,4 +1,4 @@
-function figPigeon_blockLearning(dataTable, num)
+function figPigeon_blockLearning(dataTable, block_names_publish, num)
 % function figPigeon_blockLearning(dataTable, num)
 %
 % Figure: basic performance
@@ -8,6 +8,7 @@ function figPigeon_blockLearning(dataTable, num)
 
 arguments
     dataTable    
+    block_names_publish
     num = 3
 end
 
@@ -106,6 +107,7 @@ for bb = 1:numBlocks
         xlabel('Trial number')
         ylabel('Bound (z-score)')
     end
+    title(block_names_publish(bb))
 
     % Right: Scale vs tau
     axes(axs((bb-1)*2+2)); cla reset; hold on;
@@ -116,6 +118,7 @@ for bb = 1:numBlocks
     medv = median(fdat(:,3,bb,1));
     iqrv = iqr(fdat(:,3,bb,1));
     plot(medv.*[1 1], [-1 1], 'r-')
+    yline(median(-fdat(:,2,bb,1)),'r:')
     title(sprintf('med=%.2f, iqr=%.2f', medv, iqrv))
     axis([0 100 -1 1])
     if bb == 3

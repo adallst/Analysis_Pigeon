@@ -1,10 +1,11 @@
-function figPigeon_boundByTime(dataTable, num)
+function figPigeon_boundByTime(dataTable, block_names_publish, num)
 % function figPigeon_boundByTime(dataTable, num)
 %
 % Figure: 
 
 arguments
     dataTable
+    block_names_publish
     num = 5
 end
 
@@ -83,6 +84,9 @@ for dd = 1:numDelays
         elseif bb>1
             ylabel('bounds rel. mean')
             xlabel('RT (steps)')
+        end
+        if dd == 1
+            title(block_names_publish(bb))
         end
     end
 end
