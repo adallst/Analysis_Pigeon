@@ -57,12 +57,15 @@ for dd = 1:numDelays
         plot([0 11], [0.5 0.5], 'k:');
         plot([0 11], [1 1], 'k:');
 
-        % boxplot of RT vs pct correct
+        % boxplot of RT vs congruence
         boxplot(ccData(:,:,bb,dd), 'labels', RTs);
         %     axis([40 100 0 18])
-        %     if bb == 1
-        %         xlabel('Pct correct')
-        %         ylabel('RT (steps)')
-        %     end
+        if bb == 1
+            xlabel('RT (steps)')
+            ylabel(['NDT = ' num2str(delays(dd))])
+        elseif bb>1
+            ylabel('congruence')
+            xlabel('RT (steps)')
+        end
     end
 end

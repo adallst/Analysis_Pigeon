@@ -41,6 +41,7 @@ for bb = 1:numBlocks
                 end
             end
         end
+        %normalize to 1?
         for dd = 1:numDelays
             bData(ss,:,bb,dd,1) = bData(ss,:,bb,dd,1)./ ...
                 (sum(bData(ss,:,bb,dd,1).*bData(ss,:,bb,dd,3),'omitnan')./ ...
@@ -63,7 +64,7 @@ for dd = 1:numDelays
         plot([0 11], [0.5 0.5], 'k:');
         plot([0 11], [1 1], 'k:');
 
-        % boxplot of RT vs pct correct
+        % boxplot of RT vs bound bin
         boxplot(bData(:,:,bb,dd,1), 'labels', RTs);
         ylim([0 2]);
 
@@ -76,10 +77,12 @@ for dd = 1:numDelays
         Lp = pvals<0.01./numRTs;
         plot(find(Lp), 2.*ones(sum(Lp),1), 'mo', 'MarkerFaceColor', 'm');
 
-        %     axis([40 100 0 18])
-        %     if bb == 1
-        %         xlabel('Pct correct')
-        %         ylabel('RT (steps)')
-        %     end
+        if bb == 1
+            xlabel('RT (steps)')
+            ylabel(['NDT = ' num2str(delays(dd))])
+        elseif bb>1
+            ylabel('bounds rel. mean')
+            xlabel('RT (steps)')
+        end
     end
 end
