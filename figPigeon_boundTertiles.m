@@ -52,22 +52,23 @@ for bb = 1:numBlocks
         axes(axs((ii-1)*numBlocks+bb)); cla reset; hold on;
         plot([0 0.75], [0 0.75], 'k:');
 
-        % scatterplot of mean bound in different tertiles
+        % scatterplot of mean bound in different RT tertiles
         xs = bData(:,2,bb);
         ys = bData(:,(ii-1)*2+1,bb);
         Lg = isfinite(xs) & isfinite(ys);
         plot(xs, ys, 'ko');
-        P = signrank(xs(Lg), ys(Lg));
-        title(sprintf('p=%.2f', P))
+        P = signrank(xs(Lg), ys(Lg)); 
+%         title(sprintf('p=%.2f', P))
+        title({block_names_publish(bb),sprintf('WSR p=%.2f', P)}) 
 
         axis([0 0.8 0 0.8])
         if bb == 1 && ii == 1
-            xlabel('Mean bound mid')
-            ylabel('Mean bound early')
+            xlabel('Mean bound mid RT')
+            ylabel('Mean bound fast RT')
         elseif bb == 1 && ii == 2
-            xlabel('Mean bound mid')
-            ylabel('Mean bound late')
+            xlabel('Mean bound mid RT')
+            ylabel('Mean bound slow RT')
         end
-        title(block_names_publish(bb))
+%         title(block_names_publish(bb))
     end
 end

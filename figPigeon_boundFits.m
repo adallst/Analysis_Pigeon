@@ -107,8 +107,9 @@ end
         xline(0,'k:')
         yline(0,'k:')
         plot(medRT(bb,:)', linearFits(:,1,bb,2), 'ko', 'MarkerFaceColor', wt);%medbnd(bb,:)
+        nouse = isnan(medRT(bb,:));
         lsline
-        [R,P] = corr(medRT(bb,:)', linearFits(:,1,bb,2),'type', 'Pearson');
+        [R,P] = corr(medRT(bb,~nouse)', linearFits(~nouse,1,bb,2),'type', 'Pearson');
 %         title({block_names_publish(bb),sprintf('rho=%.2f, p=%.3f', R, P)})
         title(sprintf('rho=%.2f, p=%.3f', R, P))
         axis([0 15 -0.04 0.15])
