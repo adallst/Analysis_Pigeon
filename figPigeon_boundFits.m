@@ -14,7 +14,7 @@ end
 
 %% Set up figure
 %
-EXAMPLE_SUBJECT = 13; % 12, 13, 47, 60
+EXAMPLE_SUBJECT = 1;% 13; % 12, 13, 47, 60
 wid = 17.6; % total width
 hts = 3.5;
 cols = {3, 3, 3};

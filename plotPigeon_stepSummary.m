@@ -44,7 +44,7 @@ for gg = 1:numGroups
 end
 
 % Plot it
-xax = (-1:-1:-options.numSteps)';
+xax = (0:-1:-options.numSteps+1)';
 axes(options.axs); cla reset; hold on;
 plot([-options.numSteps -1], [0 0], 'k:')
 plot([-options.numSteps -1], [options.generativeMean options.generativeMean], 'b--')
@@ -54,7 +54,7 @@ if numGroups > 2
 else
     plot(xax, stepData, 'r-', 'LineWidth', 3)
 end
-axis([-options.numSteps -1 -0.05 0.16])
+axis([-options.numSteps+1 0 -0.05 0.16])
 xlabel('Past steps re: choice')
 ylabel('Step size')
 title(options.titletext)

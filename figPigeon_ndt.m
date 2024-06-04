@@ -22,6 +22,8 @@ set(axs,'Units','normalized');
 %
 blockStruct.blockArgs.stepsPerBlock = 10000;
 blockStruct.simArgs.boundMean = 0.4;
+blockStruct.simArgs.NDTMin = 0;
+blockStruct.simArgs.NDTMax = 0;
 sdt = getPigeon_simulatedDataTable(blockStruct);
 plotPigeon_stepSummary(sdt.steps, ...
     'axs',              axs(1), ...
