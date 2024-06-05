@@ -38,8 +38,9 @@ else
 end
 boundMatrix = repmat(boundPerTrial, 1, options.maxStepsPerTrial);
 if options.boundSlope~=0
-    boundMatrix = boundMatrix .* repmat(cat(2,linspace(1,options.boundSlope,10), ...
-        options.boundSlope.*ones(1,options.maxStepsPerTrial-10)), options.numTrials, 1);
+%     boundMatrix = boundMatrix .* repmat(cat(2,linspace(1,options.boundSlope,10), ...
+%         options.boundSlope.*ones(1,options.maxStepsPerTrial-10)), options.numTrials, 1);
+    boundMatrix = boundMatrix .* repmat(1:options.boundSlope:(0+abs(options.boundSlope)), options.numTrials, 1);
 end
 
 % Make array of non-decision times
