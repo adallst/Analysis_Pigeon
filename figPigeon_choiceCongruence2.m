@@ -17,7 +17,7 @@ hts     = 3.5;
 % [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 0.5, [], 'Pigeons', true);
 % set(axs,'Units','normalized');
 figure
-tiledlayout(4,4)
+tiledlayout(4,2)
 
 % Collect data per subject/block
 subjects = nonanunique(dataTable.subjectIndex);
@@ -55,16 +55,20 @@ end
 
 ndtmedRT = nan(30,numDelays);
 
+%% 
+% figPigeon_ndt(dataTable, simDataTable, 1.1)
+
+
 %% Plotz
 % Per block
 %gry = 0.9.*ones(1,3);
 %wht = 0.99.*ones(1,3);
-firstcol = [1:4:13];
+% firstcol = [1:4:13];
 for dd = 1:numDelays
     for bb = 2%1:numBlocks
 
         % Set axes
-        nexttile(firstcol(dd)); cla reset; hold on;
+        nexttile(dd); cla reset; hold on;
         plot([0 11], [0.5 0.5], 'k:');
         plot([0 11], [1 1], 'k:');
 
@@ -78,12 +82,14 @@ for dd = 1:numDelays
             ylabel('congruence')
             xlabel('RT (steps)')
         end
-        if dd == 1
-            title(block_names_publish(bb))
-        end
+%         if dd == 1
+            title(['NDT = ' num2str(delays(dd))])
+%         end
         
         ndtmedRT(1:length(medRT(ndtbest(:,2)==delays(dd),2)),dd) = medRT(ndtbest(:,2)==delays(dd),2);
     end
 end
-nexttile(2,[2 3])
+nexttile(5,[2 2])
 boxplot(ndtmedRT,'labels',delays)
+xlabel('NDT')
+ylabel('Median RT (steps)')
