@@ -1,4 +1,4 @@
-function figPigeon_boundByTime2(dataTable, block_names_publish, ndtbest, num)
+function lateslopes = figPigeon_boundByTime2(dataTable, block_names_publish, ndtbest, num)
 % function figPigeon_boundByTime(dataTable, num)
 %
 % Figure: 
@@ -31,6 +31,7 @@ numDelays = length(delays);
 RTs = 2:14;
 numRTs = length(RTs);
 bData = nan(numSubjects,numRTs,numBlocks,numDelays,3); % last is mean/sem/n bound
+lateslopes = nan(numBlocks,4);
 
 Lg = dataTable.RT >= 0 & dataTable.correct >= 0;
 for bb = 1:numBlocks
@@ -50,6 +51,7 @@ for bb = 1:numBlocks
             bData(ss,:,bb,1,1) = bData(ss,:,bb,1,1)./ ...
                 (sum(bData(ss,:,bb,1,1).*bData(ss,:,bb,1,3),'omitnan')./ ...
                 sum(bData(ss,:,bb,1,3),'omitnan'));
+            
 %         end
     end
 end
@@ -62,7 +64,17 @@ end
 pvals = nan(numRTs,1);
 for dd = 1%:numDelays
     for bb = 2%1:numBlocks
-
+%         mdl = fitlm(RTs(4:end),nanmedian(bData(:,4:end,bb,1,1)));
+%         lateslopes(bb,:) = [mdl.Coefficients.Estimate(2) mdl.Coefficients.Estimate(1)...
+%             mdl.Coefficients.Estimate(2)+mdl.Coefficients.SE(2) ...
+%             mdl.Coefficients.Estimate(2)-mdl.Coefficients.SE(2)];
+        use =~isnan(bData(:,4:end,bb,1,1));
+        thisbdata = bData(:,4:end,bb,1,1);
+        thisRTs = repmat(RTs(4:end),numSubjects,1);
+        mdl = fitlm(thisRTs(use),thisbdata(use));
+        lateslopes(bb,:) = [mdl.Coefficients.Estimate(2) mdl.Coefficients.Estimate(1)...
+            mdl.Coefficients.Estimate(2)+mdl.Coefficients.SE(2) ...
+            mdl.Coefficients.Estimate(2)-mdl.Coefficients.SE(2)];
         % Set axes
 %         axes(axs((dd-1)*numBlocks+bb)); cla reset; hold on;
         plot([0 11], [0.5 0.5], 'k:');
@@ -80,6 +92,8 @@ for dd = 1%:numDelays
 
         Lp = pvals<0.01./numRTs;
         plot(find(Lp), 2.*ones(sum(Lp),1), 'mo', 'MarkerFaceColor', 'm');
+        
+        plot(RTs(4:end),lateslopes(bb,1).*RTs(4:end)+lateslopes(bb,2),'r')
 
         if bb == 1
             xlabel('RT (steps)')
@@ -89,7 +103,10 @@ for dd = 1%:numDelays
             xlabel('RT (steps)')
         end
         if dd == 1
-            title(block_names_publish(bb))
+            title({num,block_names_publish(bb)})
         end
     end
 end
+set(gcf, 'Color', [1 1 1]);
+set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
+set(gcf,'Position',[0 2 8.5 8.5])

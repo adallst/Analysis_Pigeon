@@ -46,9 +46,18 @@ boundMatrix(boundMatrix>options.boundMax)=options.boundMax;
 
 % Make array of non-decision times
 if options.NDTmax > options.NDTMin
-    ndts = randi(options.NDTmax-options.NDTMin+1,options.numTrials,1)-options.NDTMin+1;
+%     ndts = randi(options.NDTmax-options.NDTMin+1,options.numTrials,1)-options.NDTMin+1;
+    if options.NDTMin ==0
+        ndts = randi((options.NDTmax-options.NDTMin)+1,options.numTrials,1)-1;
+    else
+        ndts = randi(options.NDTmax-options.NDTMin,options.numTrials,1)+options.NDTMin;
+    end
 else
-    ndts = options.NDTMin*ones(options.numTrials,1);
+    if options.NDTMin ==0
+        ndts = options.NDTMin*zeros(options.numTrials,1);
+    else
+        ndts = options.NDTMin*ones(options.numTrials,1);
+    end
 end
 
 % To save

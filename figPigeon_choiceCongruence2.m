@@ -74,6 +74,7 @@ for dd = 1:numDelays
 
         % boxplot of RT vs congruence
         boxplot(ccData(:,:,bb,dd), 'labels', RTs);
+
         %     axis([40 100 0 18])
         if bb == 1
             xlabel('RT (steps)')
@@ -90,6 +91,11 @@ for dd = 1:numDelays
     end
 end
 nexttile(5,[2 2])
+hold on
 boxplot(ndtmedRT,'labels',delays)
+plot(repmat(delays+1,length(ndtmedRT),1)+randn(size(ndtmedRT)).*0.075,ndtmedRT,'.k')
 xlabel('NDT')
 ylabel('Median RT (steps)')
+set(gcf, 'Color', [1 1 1]);
+set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
+set(gcf,'Position',[0 2 8.5 16])
