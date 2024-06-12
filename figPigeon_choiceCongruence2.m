@@ -73,7 +73,10 @@ for dd = 1:numDelays
         plot([0 11], [1 1], 'k:');
 
         % boxplot of RT vs congruence
-        boxplot(ccData(:,:,bb,dd), 'labels', RTs);
+%         boxplot(ccData(:,:,bb,dd), 'labels', RTs,'symbol','.','Colors',[0.2 0.2 0.2]);
+        ad_boxplot(ccData(:,:,bb,dd),'rowhouse',0)
+        xticks(1:min(factor(size(ccData(:,:,bb,dd),2))):size(ccData(:,:,bb,dd),2))
+        xticklabels(RTs(1:min(factor(size(ccData(:,:,bb,dd),2))):size(ccData(:,:,bb,dd),2)))
 
         %     axis([40 100 0 18])
         if bb == 1
@@ -92,8 +95,11 @@ for dd = 1:numDelays
 end
 nexttile(5,[2 2])
 hold on
-boxplot(ndtmedRT,'labels',delays)
-plot(repmat(delays+1,length(ndtmedRT),1)+randn(size(ndtmedRT)).*0.075,ndtmedRT,'.k')
+% boxplot(ndtmedRT,'labels',delays,'Colors','k','notch', 'on')
+ad_boxplot(ndtmedRT,'gray')
+xticks(1:length(delays))
+xticklabels(arrayfun(@num2str,delays,'UniformOutput',false))
+% plot(repmat(delays+1,length(ndtmedRT),1)+randn(size(ndtmedRT)).*0.075,ndtmedRT,'.k')
 xlabel('NDT')
 ylabel('Median RT (steps)')
 set(gcf, 'Color', [1 1 1]);

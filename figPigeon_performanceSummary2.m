@@ -100,10 +100,10 @@ for bb = 2%1:numBlocks
     plot(pData(:,1,bb), pData(:,3,bb), 'ko', 'MarkerFaceColor', wht);
     plot([40 100], median(pData(:,3,bb),'omitnan').*[1 1], 'b:')
     axis([40 100 0 18])
-    if bb == 1
+%     if bb == 1
         xlabel('Pct correct')
         ylabel('RT (steps)')
-    end
+%     end
     title(block_names_publish(bb)) 
 
     % coins/step
@@ -117,8 +117,8 @@ for bb = 2%1:numBlocks
     plot(pData(:,5,bb), pData(:,6,bb)./600, 'ko', 'MarkerFaceColor', wht);
     plot(median(pData(:,5,bb)).*[1 1], [-1 1], 'b:')
     axis([0 0.75 -0.4 0.4])
-    if bb == 2
+%     if bb == 2
         xlabel('Median bound')
         ylabel('Coins/step')
-    end
+%     end
 end

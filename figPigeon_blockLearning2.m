@@ -19,7 +19,7 @@ hts     = [3.5];
 % [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 2.5, [], 'Pigeons', true);
 % set(axs,'Units','normalized');
 figure
-tiledlayout(3,5,'TileSpacing','tight','Padding','compact');
+tiledlayout(5,3,'TileSpacing','tight','Padding','compact');
 
 % Collect data per subject/block
 subjects = nonanunique(dataTable.subjectIndex);
@@ -114,7 +114,7 @@ for bb = 1:numBlocks
             bounds = abs(dataTable.bound(Lsb));
         end
 %         bounds = bounds(round(length(bounds)/4):end);
-
+        if sum(Lsb)>2
         % Get the real linear fit
         numTrials = length(bounds);
         X = cat(2, ones(numTrials,1), bounds);
@@ -129,6 +129,7 @@ for bb = 1:numBlocks
         end
 
         rData(ss,3,bb,ct) = sum(shuffleData(:,2)<rData(ss,2,bb,ct))./numShuffles;
+        end
     end
 end
 end
@@ -155,26 +156,13 @@ for bb = 1:numBlocks
     plot(xax, pcts(2,:), 'k-', 'LineWidth', 2);
     plot([1 120], [0 0], 'k:');
     axis([1 120 -1.5 1.5])
-    if bb == 3
+%     if bb == 3
         xlabel('Trial number')
         ylabel('Bound (z-score)')
-    end
+%     end
     title(block_names_publish(bb))
     
-    nexttile;hold on
-    ct =1;
-    plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor', wt);
-    Lsig = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
-    plot(rData(Lsig,1,bb,ct), rData(Lsig,2,bb,ct), 'ko', 'MarkerFaceColor', 'k');
-    plot([0 0.75], [-1 -1], 'k:');
-    axis([0 0.75 -2 1])
-    if bb == 3
-        xlabel('Intercept')
-        ylabel('Slope')
-    end
-    if bb ==1
-        title(['Remove first ' num2str(rmhead(ct)) ' trials'])
-    end
+    
     
 
 
@@ -190,28 +178,62 @@ for bb = 1:numBlocks
     plot(medv.*[1 1], [-1 1], 'r-')
     yline(median(-fdat(:,2,bb,1)),'r-')
 %     title(sprintf('med=%.2f, iqr=%.2f', medv, iqrv))
-    title(sprintf('med tau=%.2f \n med scale=%.2f', medv, meds),'FontSize',8)
+%     title(sprintf('med tau=%.2f \n med scale=%.2f', medv, meds),'FontSize',8)
     axis([0 100 -1 1])
-    if bb == 3
+%     if bb == 3
         xlabel('Tau')
         ylabel('Scale')
+%     end
+    
+    nexttile(9+bb);hold on
+    ct =1;
+    bins = -1.5:0.125:0.1;
+%     plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor', wt);
+    Lsig = [];
+    Lsig = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
+%     plot(rData(Lsig,1,bb,ct), rData(Lsig,2,bb,ct), 'ko', 'MarkerFaceColor', 'k');
+%     plot([0 0.75], [-1 -1], 'k:');
+%     axis([0 0.75 -2 1])
+    h1 = histcounts(rData(Lsig,2,bb,ct),'BinEdges',bins);
+    h2 = histcounts(rData(~Lsig,2,bb,ct),'BinEdges',bins);
+    bar(bins(2:end),[h1;h2]'./numSubjects,'stacked')
+    newcolors = [0 0 0; 1 1 1];
+    colororder(newcolors)
+%     if bb == 3
+%         xlabel('Intercept')
+%         ylabel('Slope')
+        xlabel('Slope')
+%     end
+    if bb ==1
+        ylabel({['Remove first ' num2str(rmhead(ct)) ' trials'],'% participants'})
+    else
+        ylabel('% participants')
     end
     
-    nexttile; hold on;
+    nexttile(12+bb); hold on;
     ct =2;
-    plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor', wt);
+%     plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor', wt);
+    Lsig = [];
     Lsig = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
-    plot(rData(Lsig,1,bb,ct), rData(Lsig,2,bb,ct), 'ko', 'MarkerFaceColor', 'k');
-    plot([0 0.75], [-1 -1], 'k:');
-    axis([0 0.75 -2 1])
+%     plot(rData(Lsig,1,bb,ct), rData(Lsig,2,bb,ct), 'ko', 'MarkerFaceColor', 'k');
+%     plot([0 0.75], [-1 -1], 'k:');
+%     axis([0 0.75 -2 1])
+    h1 = histcounts(rData(Lsig,2,bb,ct),'BinEdges',bins);
+    h2 = histcounts(rData(~Lsig,2,bb,ct),'BinEdges',bins);
+    bar(bins(2:end),[h1;h2]'./numSubjects,'stacked')
+    newcolors = [0 0 0; 1 1 1];
+    colororder(newcolors)
     if bb == 3
-        xlabel('Intercept')
-        ylabel('Slope')
+%         xlabel('Intercept')
+%         ylabel('Slope')
+        xlabel('Slope')
     end
     if bb ==1
-        title('Remove first tau trials')
+        ylabel({'Remove first tau trials','% participants'})
+    else
+        ylabel('% participants')
     end
 end
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 2 17.6 17.6/1.5])
+set(gcf,'Position',[0 2 11.6 17.6])

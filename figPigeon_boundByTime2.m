@@ -81,7 +81,10 @@ for dd = 1%:numDelays
         plot([0 11], [1 1], 'k:');
 
         % boxplot of RT vs bound bin
-        boxplot(bData(:,:,bb,1,1), 'labels', RTs);
+%         boxplot(bData(:,:,bb,1,1), 'labels', RTs);
+        ad_boxplot(bData(:,:,bb,1,1),'skyline',0)
+        xticks(1:size(bData(:,:,bb,1,1),2))
+        xticklabels(RTs(1:size(bData(:,:,bb,1,1),2)))
         ylim([0 2]);
 
         % do stats per bin
@@ -91,7 +94,7 @@ for dd = 1%:numDelays
         end
 
         Lp = pvals<0.01./numRTs;
-        plot(find(Lp), 2.*ones(sum(Lp),1), 'mo', 'MarkerFaceColor', 'm');
+%         plot(find(Lp), 2.*ones(sum(Lp),1), 'mo', 'MarkerFaceColor', 'm');
         
         plot(RTs(4:end),lateslopes(bb,1).*RTs(4:end)+lateslopes(bb,2),'r')
 
