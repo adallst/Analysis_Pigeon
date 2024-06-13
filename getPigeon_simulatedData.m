@@ -40,9 +40,11 @@ boundMatrix = repmat(boundPerTrial, 1, options.maxStepsPerTrial);
 if options.boundSlope~=0
 %     boundMatrix = boundMatrix .* repmat(cat(2,linspace(1,options.boundSlope,10), ...
 %         options.boundSlope.*ones(1,options.maxStepsPerTrial-10)), options.numTrials, 1);
-    boundMatrix = boundMatrix .* repmat((1:options.boundSlope:(0+abs(options.boundSlope)))+0.5, options.numTrials, 1);
+    boundMatrix = boundMatrix + repmat(linspace(50.*abs(options.boundSlope),0,50)+44.*options.boundSlope,...
+        options.numTrials, 1);
 end
 boundMatrix(boundMatrix>options.boundMax)=options.boundMax;
+%plot(test,0.01.*sqrt(-test+50)+0.35),plot(test,3.*-exp(0.15.*test-9)+0.75)
 
 % Make array of non-decision times
 if options.NDTmax > options.NDTMin

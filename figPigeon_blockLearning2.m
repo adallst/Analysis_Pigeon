@@ -158,9 +158,9 @@ for bb = 1:numBlocks
     axis([1 120 -1.5 1.5])
 %     if bb == 3
         xlabel('Trial number')
-        ylabel('Bound (z-score)')
+%         ylabel('Bound (z-score)')
 %     end
-    title(block_names_publish(bb))
+    ylabel({block_names_publish(bb),'Bound (z-score)'})
     
     
     
@@ -209,6 +209,7 @@ for bb = 1:numBlocks
     else
         ylabel('% participants')
     end
+    title(block_names_publish(bb))
     
     nexttile(12+bb); hold on;
     ct =2;
@@ -223,11 +224,11 @@ for bb = 1:numBlocks
     bar(bins(2:end),[h1;h2]'./numSubjects,'stacked')
     newcolors = [0 0 0; 1 1 1];
     colororder(newcolors)
-    if bb == 3
+%     if bb == 3
 %         xlabel('Intercept')
 %         ylabel('Slope')
         xlabel('Slope')
-    end
+%     end
     if bb ==1
         ylabel({'Remove first tau trials','% participants'})
     else
@@ -236,4 +237,4 @@ for bb = 1:numBlocks
 end
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 2 11.6 17.6])
+set(gcf,'Position',[0 1 11.6 17.6])

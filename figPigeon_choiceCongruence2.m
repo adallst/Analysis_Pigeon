@@ -104,4 +104,4 @@ xlabel('NDT')
 ylabel('Median RT (steps)')
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 2 8.5 16])
+set(gcf,'Position',[0 0 8.5 16])

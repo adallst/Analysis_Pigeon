@@ -14,7 +14,7 @@ end
 
 %% Set up figure
 %
-EXAMPLE_SUBJECT = 34;% 13; % 12, 13, 47, 60
+EXAMPLE_SUBJECT = 5;% 13; % 12, 13, 47, 60, 34
 wid = 17.6; % total width
 hts = 3.5;
 cols = {3, 3, 3};
@@ -38,7 +38,7 @@ patternsearch_opts = optimoptions(@patternsearch,    ...
     'MaxIter',     30000);
 
 % Loop through each subject
-Lgood = dataTable.trialNumber>10 & dataTable.RT>2 & dataTable.RT<20;
+Lgood = dataTable.trialNumber>10 & dataTable.RT>3 & dataTable.RT<20;
 f0 = [1.3 1.5]; % fit initial values
 for ss = 1:numSubjects
     disp(ss)
@@ -137,5 +137,5 @@ end
     end
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 2 8.5 17.6])
+set(gcf,'Position',[0 1 8.5 17.6])
 end

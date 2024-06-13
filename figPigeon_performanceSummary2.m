@@ -104,8 +104,8 @@ for bb = 2%1:numBlocks
         xlabel('Pct correct')
         ylabel('RT (steps)')
 %     end
-    title(block_names_publish(bb)) 
-
+%     title(block_names_publish(bb)) 
+    title('Example Block')
     % coins/step
     axes(axs(2)); cla reset; hold on;
     h=patch([bounds flip(bounds)], [rrs(:,1,bb)' flip(rrs(:,3,bb)')], gry);
