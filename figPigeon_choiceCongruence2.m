@@ -83,7 +83,7 @@ for dd = 1:numDelays
             xlabel('RT (steps)')
             ylabel(['NDT = ' num2str(delays(dd))])
         elseif bb>1
-            ylabel('congruence')
+            ylabel('Congruence')
             xlabel('RT (steps)')
         end
 %         if dd == 1

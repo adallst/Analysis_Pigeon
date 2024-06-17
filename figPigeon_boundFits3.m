@@ -1,4 +1,4 @@
-function figPigeon_boundFits2(dataTable, block_names_publish, num)
+function figPigeon_boundFits3(dataTable, block_names_publish, num,name)
 % function figPigeon_boundFits(dataTable, num)
 %
 % Figure: fit bound to linear model
@@ -9,7 +9,8 @@ function figPigeon_boundFits2(dataTable, block_names_publish, num)
 arguments
     dataTable
     block_names_publish
-    num = 5
+    num = 1
+    name = "data"
 end
 
 %% Set up figure
@@ -20,8 +21,8 @@ hts = 3.5;
 cols = {3, 3, 3};
 % [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 0.5, [], 'Pigeons', true);
 % set(axs,'Units','normalized');
-figure
-tiledlayout(3,1)
+% figure
+% tiledlayout(3,1)
 
 wt = 0.99.*ones(3,1);
 lgr = 0.75.*ones(3,1);
@@ -76,7 +77,7 @@ for ss = 1:numSubjects
         % Plotz
         if ss==EXAMPLE_SUBJECT &bb==2
 %             axes(axs(bb));cla reset; hold on;
-            nexttile
+            nexttile(num)
             hold on
 %             for xx = 1:size(sbdat,1)
 %                 h=plot(dataTable.DT(Lsb),abs(dataTable.bound(Lsb)), 'k.');
@@ -93,7 +94,7 @@ for ss = 1:numSubjects
             end
             plot(bound([1 3]), bound([2 4]), 'r-', 'LineWidth', 2)
             axis([0 20 0 0.8])
-            title({num,sprintf('slope=%.2f, y-int=%.2f', linearFits(ss,1,bb,2),linearFits(ss,2,bb,2))})
+            title({name,sprintf('slope=%.2f, y-int=%.2f', linearFits(ss,1,bb,2),linearFits(ss,2,bb,2))})
 %             if bb==1
                 xlabel('DT (steps)')
                 ylabel('Bound magnitude (a.u.)')
@@ -110,7 +111,7 @@ end
     for bb = 2%1:3
     % plot m,b from linear fits, color coded by better model (filled is
     % rt is inv gaussian)  axes(axs(numBlocks+bb))
-        nexttile; cla reset; hold on;    plot([0 0], [-1 1], 'k:');
+        nexttile(num+3); cla reset; hold on;    plot([0 0], [-1 1], 'k:');
         plot([-1 1], [0 0], 'k:');
         plot(linearFits(:,2,bb,2), linearFits(:,1,bb,2), 'ko', 'MarkerFaceColor', wt);
         axis([-0.2 0.8 -0.04 0.15])
@@ -119,7 +120,7 @@ end
             ylabel('Slope')
 %         end
 
-        nexttile; cla reset; hold on;    plot([0 0], [-1 1], 'k:');
+        nexttile(num+6); cla reset; hold on;    plot([0 0], [-1 1], 'k:');
     %     plot([-1 1], [0 0], 'k:');axes(axs(numBlocks.*2+bb))
         xline(0,'k:')
         yline(0,'k:')
@@ -135,7 +136,7 @@ end
             ylabel('Slope')
 %         end
     end
-set(gcf, 'Color', [1 1 1]);
-set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 1 8.5 17.6])
+% set(gcf, 'Color', [1 1 1]);
+% set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
+% set(gcf,'Position',[0 1 8.5 17.6])
 end
