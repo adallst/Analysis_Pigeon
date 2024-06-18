@@ -19,7 +19,7 @@ hts     = [3.5];
 % [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 2.5, [], 'Pigeons', true);
 % set(axs,'Units','normalized');
 figure
-tiledlayout(5,3,'TileSpacing','tight','Padding','compact');
+tiledlayout(3,3,'TileSpacing','tight','Padding','compact');
 
 % Collect data per subject/block
 subjects = nonanunique(dataTable.subjectIndex);
@@ -185,56 +185,73 @@ for bb = 1:numBlocks
         ylabel('Scale')
 %     end
     
-    nexttile(9+bb);hold on
-    ct =1;
-    bins = -1.5:0.125:0.1;
-%     plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor', wt);
-    Lsig = [];
-    Lsig = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
-%     plot(rData(Lsig,1,bb,ct), rData(Lsig,2,bb,ct), 'ko', 'MarkerFaceColor', 'k');
-%     plot([0 0.75], [-1 -1], 'k:');
-%     axis([0 0.75 -2 1])
-    h1 = histcounts(rData(Lsig,2,bb,ct),'BinEdges',bins);
-    h2 = histcounts(rData(~Lsig,2,bb,ct),'BinEdges',bins);
-    bar(bins(2:end),[h1;h2]'./numSubjects,'stacked')
-    newcolors = [0 0 0; 1 1 1];
-    colororder(newcolors)
-%     if bb == 3
-%         xlabel('Intercept')
-%         ylabel('Slope')
-        xlabel('Slope')
+%     nexttile(9+bb);hold on
+%     ct =1;
+%     bins = -1.5:0.125:0.1;
+% %     plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor', wt);
+%     Lsig = [];
+%     Lsig = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
+% %     plot(rData(Lsig,1,bb,ct), rData(Lsig,2,bb,ct), 'ko', 'MarkerFaceColor', 'k');
+% %     plot([0 0.75], [-1 -1], 'k:');
+% %     axis([0 0.75 -2 1])
+%     h1 = histcounts(rData(Lsig,2,bb,ct),'BinEdges',bins);
+%     h2 = histcounts(rData(~Lsig,2,bb,ct),'BinEdges',bins);
+%     bar(bins(2:end),[h1;h2]'./numSubjects,'stacked')
+%     newcolors = [0 0 0; 1 1 1];
+%     colororder(newcolors)
+% %     if bb == 3
+% %         xlabel('Intercept')
+% %         ylabel('Slope')
+%         xlabel('Slope')
+% %     end
+%     if bb ==1
+%         ylabel({['Remove first ' num2str(rmhead(ct)) ' trials'],'% participants'})
+%     else
+%         ylabel('% participants')
 %     end
-    if bb ==1
-        ylabel({['Remove first ' num2str(rmhead(ct)) ' trials'],'% participants'})
-    else
-        ylabel('% participants')
-    end
-    title(block_names_publish(bb))
+%     title(block_names_publish(bb))
+%     
+%     nexttile(12+bb); hold on;
+%     ct =2;
+% %     plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor', wt);
+%     Lsig = [];
+%     Lsig = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
+% %     plot(rData(Lsig,1,bb,ct), rData(Lsig,2,bb,ct), 'ko', 'MarkerFaceColor', 'k');
+% %     plot([0 0.75], [-1 -1], 'k:');
+% %     axis([0 0.75 -2 1])
+%     h1 = histcounts(rData(Lsig,2,bb,ct),'BinEdges',bins);
+%     h2 = histcounts(rData(~Lsig,2,bb,ct),'BinEdges',bins);
+%     bar(bins(2:end),[h1;h2]'./numSubjects,'stacked')
+%     newcolors = [0 0 0; 1 1 1];
+%     colororder(newcolors)
+% %     if bb == 3
+% %         xlabel('Intercept')
+% %         ylabel('Slope')
+%         xlabel('Slope')
+% %     end
+%     if bb ==1
+%         ylabel({'Remove first tau trials','% participants'})
+%     else
+%         ylabel('% participants')
+%     end
     
-    nexttile(12+bb); hold on;
-    ct =2;
-%     plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor', wt);
-    Lsig = [];
-    Lsig = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
-%     plot(rData(Lsig,1,bb,ct), rData(Lsig,2,bb,ct), 'ko', 'MarkerFaceColor', 'k');
-%     plot([0 0.75], [-1 -1], 'k:');
-%     axis([0 0.75 -2 1])
-    h1 = histcounts(rData(Lsig,2,bb,ct),'BinEdges',bins);
-    h2 = histcounts(rData(~Lsig,2,bb,ct),'BinEdges',bins);
-    bar(bins(2:end),[h1;h2]'./numSubjects,'stacked')
-    newcolors = [0 0 0; 1 1 1];
-    colororder(newcolors)
-%     if bb == 3
-%         xlabel('Intercept')
-%         ylabel('Slope')
-        xlabel('Slope')
-%     end
-    if bb ==1
-        ylabel({'Remove first tau trials','% participants'})
-    else
-        ylabel('% participants')
-    end
+%     nexttile(9+bb);hold on
+%     ct =1;
+%     bins = -1.5:0.125:0.1;
+%     Lsig1 = [];
+%     Lsig1 = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
+%     ct=2;
+%     Lsig2 = [];
+%     Lsig2 = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
+%     plot(rData(:,2,bb,1), rData(:,2,bb,2), 'ko', 'MarkerFaceColor', wt);
+%     plot(rData(Lsig1,2,bb,1), rData(Lsig1,2,bb,2), 'ko', 'MarkerFaceColor', gr);
+%     plot(rData(Lsig2,2,bb,1), rData(Lsig2,2,bb,2), 'ko', 'MarkerFaceColor', 'k');
+%     xlabel('Slope w/ all trials')
+%     ylabel('Slope w/o tau trials')
+%     title(block_names_publish(bb))
+%     xlim([-2 1])
+%     ylim([-2 1])
 end
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 1 11.6 17.6])
+set(gcf,'Position',[0 1 11.6 11.6])

@@ -15,11 +15,13 @@ arguments
 end
 
 %% Set up figure
-wid     = 17.6./3; % total width
-cols    = {1,1};
-hts     = [3.5 3.5];
-[axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 0.5, [], 'Pigeons', true);
-set(axs,'Units','normalized');
+% wid     = 17.6./3; % total width
+% cols    = {1,1};
+% hts     = [3.5 3.5];
+% [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 0.5, [], 'Pigeons', true);
+% set(axs,'Units','normalized');
+figure
+tiledlayout(2,3)
 
 % Collect data per subject/block
 subjects = nonanunique(dataTable.subjectIndex);
@@ -57,7 +59,7 @@ numBounds = length(bounds);
 blockStructs = struct();
 blockStructs.blockArgs.numSubjects = numSimSubjects;
 rrs = nan(numBounds,3,numBlocks);
-for bb = 2%1:numBlocks
+for bb = 1:numBlocks
     
     fprintf('figPigeon_performanceSummary: Collecting simulated data, block %d\n', bb)
 
@@ -92,22 +94,28 @@ end
 %STEPS_PER_BLOCK = 600;
 gry = 0.9.*ones(1,3);
 wht = 0.99.*ones(1,3);
-for bb = 2%1:numBlocks
+for bb = 1:numBlocks
 
     % RT vs pct correct
-    axes(axs(1)); cla reset; hold on;
+    nexttile; cla reset; hold on;
     plot(pData(:,[1 1],bb)', pData(:,[2 4],bb)', 'k-');
     plot(pData(:,1,bb), pData(:,3,bb), 'ko', 'MarkerFaceColor', wht);
-    plot([40 100], median(pData(:,3,bb),'omitnan').*[1 1], 'b:')
+% %     plot([40 100], median(pData(:,3,bb),'omitnan').*[1 1], 'b:')
+%     plot(median(pData(:,1,bb),'omitnan'), median(pData(:,3,bb),'omitnan'), ...
+%         '+','Color',[0.6350 0.0780 0.1840],'MarkerFaceColor',gry,'MarkerSize',10,'LineWidth',2)
+        plot(40, median(pData(:,3,bb),'omitnan'), ...
+        '>','Color',[0.6350 0.0780 0.1840],'MarkerFaceColor',gry,'MarkerSize',4,'LineWidth',2)
+        plot(median(pData(:,1,bb),'omitnan'), 0, ...
+        '^','Color',[0.6350 0.0780 0.1840],'MarkerFaceColor',gry,'MarkerSize',4,'LineWidth',2)
     axis([40 100 0 18])
 %     if bb == 1
         xlabel('Pct correct')
         ylabel('RT (steps)')
 %     end
-%     title(block_names_publish(bb)) 
-    title('Example Block')
+    title(block_names_publish(bb)) 
+%     title('Example Block')
     % coins/step
-    axes(axs(2)); cla reset; hold on;
+    nexttile(numBlocks+bb); cla reset; hold on;
     h=patch([bounds flip(bounds)], [rrs(:,1,bb)' flip(rrs(:,3,bb)')], gry);
     % sd = std(rrs(:,:,bb),'omitnan');
     % h=patch([bounds flip(bounds)], [mn-sd flip(mn+sd)], gr);
@@ -115,10 +123,19 @@ for bb = 2%1:numBlocks
     plot(bounds, rrs(:,2,bb), 'k-', 'LineWidth', 2)
 
     plot(pData(:,5,bb), pData(:,6,bb)./600, 'ko', 'MarkerFaceColor', wht);
-    plot(median(pData(:,5,bb)).*[1 1], [-1 1], 'b:')
+%     plot(median(pData(:,5,bb)).*[1 1], [-1 1], 'b:')
+%     plot(median(pData(:,5,bb)), median(pData(:,6,bb)./600,'omitnan'), ...
+%         '+','Color',[0.6350 0.0780 0.1840],'MarkerFaceColor',gry,'MarkerSize',10,'LineWidth',2)
+    plot(0, median(pData(:,6,bb)./600,'omitnan'), ...
+        '>','Color',[0.6350 0.0780 0.1840],'MarkerFaceColor',gry,'MarkerSize',4,'LineWidth',2)
+    plot(median(pData(:,5,bb)), -0.4, ...
+        '^','Color',[0.6350 0.0780 0.1840],'MarkerFaceColor',gry,'MarkerSize',4,'LineWidth',2)
     axis([0 0.75 -0.4 0.4])
 %     if bb == 2
         xlabel('Median bound')
         ylabel('Coins/step')
 %     end
 end
+set(gcf, 'Color', [1 1 1]);
+set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
+set(gcf,'Position',[0 1 17.6 11.6])

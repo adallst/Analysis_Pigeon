@@ -97,6 +97,8 @@ nexttile(5,[2 2])
 hold on
 % boxplot(ndtmedRT,'labels',delays,'Colors','k','notch', 'on')
 ad_boxplot(ndtmedRT,'gray')
+s = swarmchart(repmat(delays+1,30,1),ndtmedRT,4,'k',XJitterWidth = 0.5);
+% plot(delays+1,median(ndtmedRT,'omitnan'),'r_',"MarkerSize",12)
 xticks(1:length(delays))
 xticklabels(arrayfun(@num2str,delays,'UniformOutput',false))
 % plot(repmat(delays+1,length(ndtmedRT),1)+randn(size(ndtmedRT)).*0.075,ndtmedRT,'.k')
