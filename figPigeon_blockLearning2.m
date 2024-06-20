@@ -19,8 +19,8 @@ hts     = [3.5];
 % [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 2.5, [], 'Pigeons', true);
 % set(axs,'Units','normalized');
 figure
-tiledlayout(3,3,'TileSpacing','tight','Padding','compact');
-
+tiledlayout(3,4,'TileSpacing','tight','Padding','compact');
+EXAMPLE_SUBJECT =12;
 % Collect data per subject/block
 subjects = nonanunique(dataTable.subjectIndex);
 numSubjects = length(subjects);
@@ -78,6 +78,18 @@ for ss = 1:numSubjects
         %             fdat(ss,1,bb,2), fdat(ss,2,bb,2), fdat(ss,3,bb,2)))
         %
         %         r = input('next')
+        
+        if ss==EXAMPLE_SUBJECT
+            nexttile(3+4.*(bb-1)); hold on;
+            plot(xs, bounds, 'k.');
+            plot(xs, fcn(fdat(ss,:,bb),xs), 'r-',"LineWidth",2)
+%             title(sprintf('Lower=%.2f, Upper=%.2f, Tau=%.2f', ...
+%                 fdat(ss,1,bb,1), fdat(ss,2,bb,1), fdat(ss,3,bb,1)))
+            title("Example Fit")
+            xlabel("Trials")
+            ylabel("Bound (a.u.)")
+        end
+        
 
         % z-score bound from full block
         zBounds(ss,1:length(bounds),bb) = zscore(bounds);
@@ -143,7 +155,7 @@ subjectCutoff = 0.5; % exclude trials with less than this frac of subj data
 for bb = 1:numBlocks
 
     % Left: zbound median, IQR
-    nexttile([1,2]); hold on;
+    nexttile((1+4.*(bb-1)),[1,2]); hold on;
     subjectFraction = sum(isfinite(zBounds(:,:,bb)))./numSubjects;
     trialCutoff = find(subjectFraction<subjectCutoff,1);
     xax = 1:trialCutoff;
@@ -167,7 +179,7 @@ for bb = 1:numBlocks
 
 
     % Right: Scale vs tau
-    nexttile; hold on;
+    nexttile(4+4.*(bb-1)); hold on;
     plot([0 500], [0 0], 'k:')
     plot(fdat(:,3,bb), -fdat(:,2,bb), 'ko', 'MarkerFaceColor', wt);
     Lp = fdat(:,4,bb)<0.01;
@@ -254,4 +266,4 @@ for bb = 1:numBlocks
 end
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 1 11.6 11.6])
+set(gcf,'Position',[0 1 15.6 11.6])

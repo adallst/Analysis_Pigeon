@@ -1,4 +1,4 @@
-function figPigeon_regressionToMean2(dataTable, block_names_publish, fdat, num)
+function figPigeon_regressionToMean3(dataTable, block_names_publish, fdat, num)
 % function figPigeon_regressionToMean(dataTable, num)
 %
 % Figure: regression to mean
@@ -16,9 +16,9 @@ cols    = {3};
 hts     = 3.0;
 % [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 0.5, [], 'Pigeons', true);
 % set(axs,'Units','normalized');
-% figure
-% tiledlayout(1,3)
-
+figure
+tiledlayout(2,3)
+EXAMPLE_SUBJECT=12; %find(sum(fitsdata2(:,3,:)<20,3)==3)
 % Collect data per subject/block
 subjects = nonanunique(dataTable.subjectIndex);
 numSubjects = length(subjects);
@@ -55,6 +55,11 @@ for bb = 1:numBlocks
         X = cat(2, ones(numTrials,1), bounds);
         Y = diff(bounds);
         rData(ss,1:2,bb,ct) = X(1:end-1,:)\Y;
+        
+        if ss==EXAMPLE_SUBJECT&ct==2
+            egX{bb}=X(1:end-1,2);
+            egY{bb}=Y;
+        end
        
         % Do the shuffles
         for ff = 1:numShuffles
@@ -131,8 +136,17 @@ for bb = 1:numBlocks
 %     xlim([-2 1])
 %     ylim([-2 1])
 
+    nexttile(bb);hold on
+    yline(0,'k:')
+    plot(0:0.025:0.75,0.75:-0.05:-0.75,'k:')
+    plot(egX{bb},egY{bb},'k.')
+    plot(0:0.025:0.75,[0:0.025:0.75].*rData(EXAMPLE_SUBJECT,2,bb,ct)+rData(EXAMPLE_SUBJECT,1,bb,ct),'k')
+    xlabel('Previous bound')
+    ylabel('Change in bound')
+    title(block_names_publish(bb))
+
     bins = -1.5:0.125:0.1;
-    nexttile;hold on
+    nexttile(bb+numBlocks);hold on
     ct =2;
 %     plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor',wt);
     Lsig = [];
@@ -148,13 +162,13 @@ for bb = 1:numBlocks
         xlabel('Slope')
 %     end
     if bb ==1
-        ylabel({num,'Remove first tau trials','% participants'})
+        ylabel({'Remove first tau trials','% participants'})
     else
         ylabel('% participants')
     end
-    title(block_names_publish(bb))
+
 
 end
-% set(gcf, 'Color', [1 1 1]);
-% set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-% set(gcf,'Position',[0 1 17.4 5.4])
+set(gcf, 'Color', [1 1 1]);
+set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
+set(gcf,'Position',[0 1 11.6 7])

@@ -61,7 +61,7 @@ ndtmedRT = nan(50,numDelays);
 
 %% Plotz
 % Per block
-%gry = 0.9.*ones(1,3);
+gry = 0.9.*ones(1,3);
 %wht = 0.99.*ones(1,3);
 % firstcol = [1:4:13];
 for dd = 1:numDelays
@@ -96,12 +96,13 @@ end
 nexttile(5,[2 2])
 hold on
 % boxplot(ndtmedRT,'labels',delays,'Colors','k','notch', 'on')
-ad_boxplot(ndtmedRT,'gray')
-s = swarmchart(repmat(delays+1,50,1),ndtmedRT,4,'k',XJitterWidth = 0.5);
+% ad_boxplot(ndtmedRT,'gray')
+% s = swarmchart(repmat(delays+1,50,1),ndtmedRT,4,'k',XJitterWidth = 0.5);
 % plot(delays+1,median(ndtmedRT,'omitnan'),'r_',"MarkerSize",12)
-xticks(1:length(delays))
-xticklabels(arrayfun(@num2str,delays,'UniformOutput',false))
+% xticks(1:length(delays))
+% xticklabels(arrayfun(@num2str,delays,'UniformOutput',false))
 % plot(repmat(delays+1,length(ndtmedRT),1)+randn(size(ndtmedRT)).*0.075,ndtmedRT,'.k')
+histogram(ndtbest,"FaceColor",gry)
 xlabel('NDT')
 ylabel('Median RT (steps)')
 sgtitle(num)

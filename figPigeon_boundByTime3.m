@@ -162,13 +162,13 @@ for dd = 1%:numDelays
             title(num)
         end
         
-        nexttile; hold on
-        plot(repmat(DTs(1:size(bData(:,:,bb,1,1),2)),size(bData(:,:,bb,1,1),1),1),bData(:,:,bb,1,1),'k.')
-        plot(DTs(1:size(bData(:,:,bb,1,1),2)),median(bData(:,:,bb,1,1),'omitnan'),'k')
-        ylim([-0.05 4]);
-        ylabel('Bounds rel. mean')
-        xlabel('DT (steps)')
-        title(num)
+%         nexttile; hold on
+%         plot(repmat(DTs(1:size(bData(:,:,bb,1,1),2)),size(bData(:,:,bb,1,1),1),1),bData(:,:,bb,1,1),'k.')
+%         plot(DTs(1:size(bData(:,:,bb,1,1),2)),median(bData(:,:,bb,1,1),'omitnan'),'k')
+%         ylim([-0.05 4]);
+%         ylabel('Bounds rel. mean')
+%         xlabel('DT (steps)')
+%         title(num)
     end
 end
 set(gcf, 'Color', [1 1 1]);
