@@ -111,16 +111,16 @@ end
     for bb = 2%1:3
     % plot m,b from linear fits, color coded by better model (filled is
     % rt is inv gaussian)  axes(axs(numBlocks+bb))
-        nexttile(num+3); cla reset; hold on;    plot([0 0], [-1 1], 'k:');
-        plot([-1 1], [0 0], 'k:');
-        plot(linearFits(:,2,bb,2), linearFits(:,1,bb,2), 'ko', 'MarkerFaceColor', wt);
-        axis([-0.2 0.8 -0.04 0.15])
-%         if bb == 1
-            xlabel('y-intercept')
-            ylabel('Slope')
-%         end
+%         nexttile(num+3); cla reset; hold on;    plot([0 0], [-1 1], 'k:');
+%         plot([-1 1], [0 0], 'k:');
+%         plot(linearFits(:,2,bb,2), linearFits(:,1,bb,2), 'ko', 'MarkerFaceColor', wt);
+%         axis([-0.2 0.8 -0.04 0.15])
+% %         if bb == 1
+%             xlabel('y-intercept')
+%             ylabel('Slope')
+% %         end
 
-        nexttile(num+6); cla reset; hold on;    plot([0 0], [-1 1], 'k:');
+        nexttile(num+3); cla reset; hold on;    plot([0 0], [-1 1], 'k:');
     %     plot([-1 1], [0 0], 'k:');axes(axs(numBlocks.*2+bb))
         xline(0,'k:')
         yline(0,'k:')

@@ -21,7 +21,7 @@ cols = {3, 3, 3};
 % [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 0.5, [], 'Pigeons', true);
 % set(axs,'Units','normalized');
 figure
-tiledlayout(3,1)
+tiledlayout(3,3)
 
 wt = 0.99.*ones(3,1);
 lgr = 0.75.*ones(3,1);
@@ -74,9 +74,9 @@ for ss = 1:numSubjects
     
 
         % Plotz
-        if ss==EXAMPLE_SUBJECT &bb==2
+        if ss==EXAMPLE_SUBJECT %&bb==2
 %             axes(axs(bb));cla reset; hold on;
-            nexttile
+            nexttile(bb)
             hold on
 %             for xx = 1:size(sbdat,1)
 %                 h=plot(dataTable.DT(Lsb),abs(dataTable.bound(Lsb)), 'k.');
@@ -107,10 +107,10 @@ end
 
 
 % Plot summary
-    for bb = 2%1:3
+    for bb = 1:3
     % plot m,b from linear fits, color coded by better model (filled is
     % rt is inv gaussian)  axes(axs(numBlocks+bb))
-        nexttile; cla reset; hold on;    plot([0 0], [-1 1], 'k:');
+        nexttile(bb+numBlocks); cla reset; hold on;    plot([0 0], [-1 1], 'k:');
         plot([-1 1], [0 0], 'k:');
         plot(linearFits(:,2,bb,2), linearFits(:,1,bb,2), 'ko', 'MarkerFaceColor', wt);
         axis([-0.2 0.8 -0.04 0.15])
@@ -118,8 +118,8 @@ end
             xlabel('y-intercept')
             ylabel('Slope')
 %         end
-
-        nexttile; cla reset; hold on;    plot([0 0], [-1 1], 'k:');
+        slopecomp(:,bb)=linearFits(:,1,bb,2);
+        nexttile(bb+numBlocks*2); cla reset; hold on;    plot([0 0], [-1 1], 'k:');
     %     plot([-1 1], [0 0], 'k:');axes(axs(numBlocks.*2+bb))
         xline(0,'k:')
         yline(0,'k:')
@@ -137,5 +137,36 @@ end
     end
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 1 8.5 17.6])
+set(gcf,'Position',[0 1 17.6 17.6])
+
+figure
+tiledlayout(1,3)
+nexttile; hold on
+plot(-0.04:0.01:0.15,-0.04:0.01:0.15,'k:')
+plot(slopecomp(:,1),slopecomp(:,2),'k.')
+[p h] = signrank(slopecomp(:,1),slopecomp(:,2));
+title(["WSR p = " num2str(p)]);
+axis([-0.04 0.15 -0.04 0.15])
+axis square
+xlabel('block 1 slope')
+ylabel('block 2 slope')
+nexttile; hold on
+plot(-0.04:0.01:0.15,-0.04:0.01:0.15,'k:')
+plot(slopecomp(:,2),slopecomp(:,3),'k.')
+[p h] = signrank(slopecomp(:,2),slopecomp(:,3));
+title(["WSR p = " num2str(p)]);
+axis([-0.04 0.15 -0.04 0.15])
+axis square
+xlabel('block 2 slope')
+ylabel('block 3 slope')
+nexttile; hold on
+plot(-0.04:0.01:0.15,-0.04:0.01:0.15,'k:')
+plot(slopecomp(:,1),slopecomp(:,3),'k.')
+[p h] = signrank(slopecomp(:,1),slopecomp(:,3));
+title(["WSR p = " num2str(p)]);
+axis([-0.04 0.15 -0.04 0.15])
+axis square
+xlabel('block 1 slope')
+ylabel('block 3 slope')
+set(gcf, 'Color', [1 1 1]);
 end
