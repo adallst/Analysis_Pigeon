@@ -90,7 +90,7 @@ for dd = 1:numDelays
             title(['NDT = ' num2str(delays(dd))])
 %         end
         
-        ndtmedRT(1:length(medRT(ndtbest(:,2)==delays(dd),2)),dd) = medRT(ndtbest(:,2)==delays(dd),2);
+        ndtmedRT(1:length(medRT(ndtbest(:,bb)==delays(dd),bb)),dd) = medRT(ndtbest(:,bb)==delays(dd),2);
     end
 end
 nexttile(5,[2 2])
@@ -105,7 +105,8 @@ hold on
 histogram(ndtbest,"FaceColor",gry)
 xlabel('NDT')
 ylabel('Median RT (steps)')
-sgtitle(num)
+% sgtitle(num)
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 0 8.5 16])
+set(gcf,'Position',[0 0 6 10])
+set(gcf,'PaperPosition',[0 0 6 10])

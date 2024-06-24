@@ -21,7 +21,7 @@ cols = {3, 3, 3};
 % [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 0.5, [], 'Pigeons', true);
 % set(axs,'Units','normalized');
 figure
-tiledlayout(3,3)
+tiledlayout(4,3,"TileSpacing","compact")
 
 wt = 0.99.*ones(3,1);
 lgr = 0.75.*ones(3,1);
@@ -93,7 +93,7 @@ for ss = 1:numSubjects
             end
             plot(bound([1 3]), bound([2 4]), 'r-', 'LineWidth', 2)
             axis([0 20 0 0.8])
-            title({num,sprintf('slope=%.2f, y-int=%.2f', linearFits(ss,1,bb,2),linearFits(ss,2,bb,2))})
+            title({block_names_publish(bb),sprintf('slope=%.2f, y-int=%.2f', linearFits(ss,1,bb,2),linearFits(ss,2,bb,2))})
 %             if bb==1
                 xlabel('DT (steps)')
                 ylabel('Bound magnitude (a.u.)')
@@ -135,38 +135,47 @@ end
             ylabel('Slope')
 %         end
     end
-set(gcf, 'Color', [1 1 1]);
-set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 1 17.6 17.6])
+% set(gcf, 'Color', [1 1 1]);
+% set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
+% set(gcf,'Position',[0 1 13.6 11.6])
 
-figure
-tiledlayout(1,3)
+% figure
+% tiledlayout(1,3)
 nexttile; hold on
 plot(-0.04:0.01:0.15,-0.04:0.01:0.15,'k:')
 plot(slopecomp(:,1),slopecomp(:,2),'k.')
 [p h] = signrank(slopecomp(:,1),slopecomp(:,2));
-title(["WSR p = " num2str(p)]);
+% title(["WSR p = " num2str(p)]);
+% title({block_names_publish(1),sprintf('WSR p =%.4f', p)})
+title(sprintf('WSR p =%.4f', p))
 axis([-0.04 0.15 -0.04 0.15])
 axis square
-xlabel('block 1 slope')
-ylabel('block 2 slope')
+xlabel('No cost slope')
+ylabel('Coin cost slope')
 nexttile; hold on
 plot(-0.04:0.01:0.15,-0.04:0.01:0.15,'k:')
 plot(slopecomp(:,2),slopecomp(:,3),'k.')
 [p h] = signrank(slopecomp(:,2),slopecomp(:,3));
-title(["WSR p = " num2str(p)]);
+% title(["WSR p = " num2str(p)]);
+% title({block_names_publish(2),sprintf('WSR p =%.4f', p)})
+title(sprintf('WSR p =%.4f', p))
 axis([-0.04 0.15 -0.04 0.15])
 axis square
-xlabel('block 2 slope')
-ylabel('block 3 slope')
+xlabel('Coin cost slope')
+ylabel('Step cost slope')
 nexttile; hold on
 plot(-0.04:0.01:0.15,-0.04:0.01:0.15,'k:')
 plot(slopecomp(:,1),slopecomp(:,3),'k.')
 [p h] = signrank(slopecomp(:,1),slopecomp(:,3));
-title(["WSR p = " num2str(p)]);
+% title(["WSR p = " num2str(p)]);
+% title({block_names_publish(3),sprintf('WSR p =%.4f', p)})
+title(sprintf('WSR p =%.4f', p))
 axis([-0.04 0.15 -0.04 0.15])
 axis square
-xlabel('block 1 slope')
-ylabel('block 3 slope')
+xlabel('No cost slope')
+ylabel('Step cost slope')
 set(gcf, 'Color', [1 1 1]);
+set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
+% set(gcf,'Position',[0 1 11.6 5])
+set(gcf,'Position',[0 1 14.6 16.6])
 end

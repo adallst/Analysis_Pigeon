@@ -138,4 +138,5 @@ for bb = 1:numBlocks
 end
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
-set(gcf,'Position',[0 1 17.6 11.6])
+set(gcf,'Position',[0 1 15.6 9])
+set(gcf,'PaperPosition',[0 1 15.6 9])

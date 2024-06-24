@@ -133,7 +133,7 @@ for bb = 1:numBlocks
 
     bins = -1.5:0.125:0.1;
     nexttile;hold on
-    ct =2;
+    ct =1;
 %     plot(rData(:,1,bb,ct), rData(:,2,bb,ct), 'ko', 'MarkerFaceColor',wt);
     Lsig = [];
     Lsig = rData(:,3,bb,ct)<0.005 | rData(:,3,bb,ct)>0.995;
@@ -148,7 +148,7 @@ for bb = 1:numBlocks
         xlabel('Slope')
 %     end
     if bb ==1
-        ylabel({num,'Remove first tau trials','% participants'})
+        ylabel({num,'% participants'})
     else
         ylabel('% participants')
     end
