@@ -1,12 +1,11 @@
-function figPigeon_regressionToMean2(dataTable, block_names_publish, fdat, num)
+function figPigeon_regressionToMean2(dataTable, block_names_publish, num)
 % function figPigeon_regressionToMean(dataTable, num)
 %
 % Figure: regression to mean
 %
 arguments
     dataTable   
-    block_names_publish
-    fdat
+    block_names_publish    
     num = 2
 end
 
@@ -31,7 +30,7 @@ rmhead = [0 20]; %removing the first so many trials comparison to all trials
 numShuffles = 1000;
 shuffleData = nan(numShuffles,2);
 
-for ct =1:length(rmhead)
+for ct =1%:length(rmhead)
 % Loop through each subject
 Lg = dataTable.trialNumber > rmhead(ct) & dataTable.RT>=0;
 for bb = 1:numBlocks

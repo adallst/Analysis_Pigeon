@@ -164,7 +164,7 @@ for bb = 1:length(blockStructs)
 
     stepCounts = nan(simArgs(bb).numTrials,1);
     coinCounts = nan(simArgs(bb).numTrials,1);
-    NDT = min(2, simArgs(bb).NDTmax);
+    NDT = min(2, simArgs(bb).NDTMin);
 
     % Do the simulation, per subject
     for ss = 1:blockArgs(bb).numSubjects

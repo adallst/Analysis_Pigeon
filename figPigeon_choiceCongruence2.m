@@ -17,7 +17,7 @@ hts     = 3.5;
 % [axs,~] = getPLOT_axes(num, wid, hts, cols, 1.3, 0.5, [], 'Pigeons', true);
 % set(axs,'Units','normalized');
 figure
-tiledlayout(4,2)
+tiledlayout(6,2,'TileSpacing','compact')
 
 % Collect data per subject/block
 subjects = nonanunique(dataTable.subjectIndex);
@@ -68,7 +68,7 @@ for dd = 1:numDelays
     for bb = 2%1:numBlocks
 
         % Set axes
-        nexttile(dd); cla reset; hold on;
+        nexttile([2,1]); cla reset; hold on;
         plot([0 11], [0.5 0.5], 'k:');
         plot([0 11], [1 1], 'k:');
 
@@ -77,13 +77,15 @@ for dd = 1:numDelays
         ad_boxplot(ccData(:,:,bb,dd),'rowhouse',0)
         xticks(1:min(factor(size(ccData(:,:,bb,dd),2))):size(ccData(:,:,bb,dd),2))
         xticklabels(RTs(1:min(factor(size(ccData(:,:,bb,dd),2))):size(ccData(:,:,bb,dd),2)))
+        ylim([0 1.5])
 
         %     axis([40 100 0 18])
-        if bb == 1
+        if dd == 1|dd==3
             xlabel('RT (steps)')
-            ylabel(['NDT = ' num2str(delays(dd))])
-        elseif bb>1
+%             ylabel(['NDT = ' num2str(delays(dd))])
             ylabel('Congruence')
+        elseif dd~=3|dd~=1
+%             ylabel('Congruence')
             xlabel('RT (steps)')
         end
 %         if dd == 1
@@ -93,7 +95,7 @@ for dd = 1:numDelays
         ndtmedRT(1:length(medRT(ndtbest(:,bb)==delays(dd),bb)),dd) = medRT(ndtbest(:,bb)==delays(dd),2);
     end
 end
-nexttile(5,[2 2])
+nexttile(9,[2 2])
 hold on
 % boxplot(ndtmedRT,'labels',delays,'Colors','k','notch', 'on')
 % ad_boxplot(ndtmedRT,'gray')
@@ -102,9 +104,10 @@ hold on
 % xticks(1:length(delays))
 % xticklabels(arrayfun(@num2str,delays,'UniformOutput',false))
 % plot(repmat(delays+1,length(ndtmedRT),1)+randn(size(ndtmedRT)).*0.075,ndtmedRT,'.k')
-histogram(ndtbest,"FaceColor",gry)
+histogram(ndtbest(:,2),"FaceColor",gry)
 xlabel('NDT')
-ylabel('Median RT (steps)')
+ylabel('# participants')
+% ylabel('Median RT (steps)')
 % sgtitle(num)
 set(gcf, 'Color', [1 1 1]);
 set(gcf, 'PaperUnits', 'centimeters','Units', 'centimeters')
