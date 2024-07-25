@@ -1,4 +1,4 @@
-function [choices, rts, DV, bounds, ndts,dts] = getPigeon_simulatedData(options)
+function [choices, rts, DV, bounds, ndts,dts] = getPigeon_simulatedData2(options)
 %
 % Returns:
 %   choices ... 0/1
@@ -17,6 +17,7 @@ arguments
     options.boundMean           double = 0      % bound mean/start value
     options.boundSTD            double = 0      % bound variability (trial-to-trial)
     options.boundSlope          double = 0      % Time-dependent slope
+    options.boundIntercept      double = 1.15;  % Intercept
     options.boundMax            double = 0.75;  % max, fixed by task geometry
     options.NDTMin              double = 0;     % non-decision time
     options.NDTmax              double = 0;     % non-decision time
